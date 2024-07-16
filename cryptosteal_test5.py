@@ -31,7 +31,9 @@ class CryptoSteal:
             "only_inline": False,
             "token_length_limit": 32
         }
-        asyncio.ensure_future(self.process_config())
+
+    async def start(self):
+        await self.process_config()
 
     async def process_config(self):
         self.regex_ready.clear()
@@ -66,11 +68,14 @@ class CryptoSteal:
                         match = re.match(self.regex, button.url)
                         if match:
                             bot_name, start_param = match.groups()
-                            await message.reply(f"Отправка команды /start {start_param} боту @{bot_name}")
                             await self.acquire(bot_name, start_param)
 
 def register_module(app: Client):
     crypto_steal = CryptoSteal(app)
+    
     @app.on_message(filters.create(is_owner) & filters.regex(r"^🦋 Чек на"))
     async def check_buttons_handler(client, message):
         await crypto_steal.check_buttons(client, message)
+
+    app.add_handler(check_buttons_handler)
+    app.add_handler(crypto_steal.start, group=0)
