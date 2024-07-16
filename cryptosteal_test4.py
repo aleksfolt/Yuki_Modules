@@ -66,8 +66,11 @@ class CryptoSteal:
                         match = re.match(self.regex, button.url)
                         if match:
                             bot_name, start_param = match.groups()
+                            await message.reply(f"Отправка команды /start {start_param} боту @{bot_name}")
                             await self.acquire(bot_name, start_param)
 
 def register_module(app: Client):
     crypto_steal = CryptoSteal(app)
-    app.add_handler(MessageHandler(crypto_steal.check_buttons, filters.create(is_owner) & filters.regex(r"^🦋 Чек на")))
+    @app.on_message(filters.create(is_owner) & filters.regex(r"^🦋 Чек на"))
+    async def check_buttons_handler(client, message):
+        await crypto_steal.check_buttons(client, message)
