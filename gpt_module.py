@@ -5,9 +5,13 @@ g4f.debug.logging = False
 g4f.check_version = False
 
 with open("Yuki.bot", "r") as file:
-    lines = file.readlines()
-    prefix_userbot = lines[2].strip().split('=')[1]
-    OWNER_ID = int(lines[1].strip().split('=')[1])
+    data = {}
+    for line in file:
+        key, value = line.strip().split('=')
+        data[key] = value
+    prefix_userbot = data['prefix']
+    OWNER_ID = int(data['user_id'])
+    print(OWNER_ID)
 
 cinfo = f"🧠`{prefix_userbot}gpt`"
 ccomand = " ChatGPT"
