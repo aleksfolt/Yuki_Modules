@@ -28,7 +28,7 @@ cinfo = f"☀{prefix_userbot}afk"
 ccomand = f" включает и выключает режим AFK.\nПример: {prefix_userbot}afk <причина>\nПример: {prefix_userbot}afkoff"
 
 def register_module(app: Client):
-    @app.on_message(filters.create(is_owner) & filters.command("afk", prefixes=prefix_userbot))
+    @app.on_message(filters.me & filters.command("afk", prefixes=prefix_userbot))
     async def set_afk_mode(client: Client, message: Message):
         chat_id = str(message.chat.id)
         afk_status[chat_id] = {
