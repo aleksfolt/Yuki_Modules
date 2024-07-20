@@ -8,16 +8,15 @@ with open("Yuki.bot", "r") as file:
         data[key] = value
     prefix_userbot = data['prefix']
     OWNER_ID = int(data['user_id'])
-    print(OWNER_ID)
 
 cinfo = f"💱`{prefix_userbot}exchange_rate`"
-ccomand = " показывает курс обмена валют. Пример: `exchange_rate USD RUB`"
+ccomand = f" показывает курс обмена валют. Пример: `{prefix_userbot}exchange_rate USD RUB`"
 
 def is_owner(_, __, message):
     return message.from_user.id == OWNER_ID
 
 def register_module(app: Client):
-    @app.on_message(filters.create(is_owner) & filters.command("exchange_rate", prefixes=prefix_userbot))
+    @app.on_message(filters.me & filters.command("exchange_rate", prefixes=prefix_userbot))
     async def exchange_rate(_, message):
         try:
             base, target = message.text.split(" ")[1:3]
