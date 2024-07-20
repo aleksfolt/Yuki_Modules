@@ -11,7 +11,7 @@ with open("Yuki.bot", "r") as file:
     print(OWNER_ID)
 
 cinfo = f"🎬`{prefix_userbot}movie`"
-ccomand = " показывает информацию о фильме. Пример: `movie Inception`"
+ccomand = f" показывает информацию о фильме. Пример: `{prefix_userbot}movie Inception`"
 
 def get_api_key(service_name):
     try:
