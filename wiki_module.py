@@ -7,7 +7,6 @@ CONFIG_FILE = "config.json"
 
 with open(CONFIG_FILE, "r") as file:
     config_data = json.load(file)
-    OWNER_ID = int(config_data['user_id'])
     prefix_userbot = config_data['prefix']
 
 cinfo = f"🔍{prefix_userbot}wiki"
