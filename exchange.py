@@ -1,19 +1,16 @@
 from pyrogram import Client, filters
 import requests
+import json
 
-with open("Yuki.bot", "r") as file:
-    data = {}
-    for line in file:
-        key, value = line.strip().split('=')
-        data[key] = value
-    prefix_userbot = data['prefix']
-    OWNER_ID = int(data['user_id'])
+CONFIG_FILE = "config.json"
+
+with open(CONFIG_FILE, "r") as file:
+    config_data = json.load(file)
+    prefix_userbot = config_data['prefix']
+    OWNER_ID = int(config_data['user_id'])
 
 cinfo = f"💱`{prefix_userbot}exchange_rate`"
 ccomand = f" показывает курс обмена валют. Пример: `{prefix_userbot}exchange_rate USD RUB`"
-
-def is_owner(_, __, message):
-    return message.from_user.id == OWNER_ID
 
 def register_module(app: Client):
     @app.on_message(filters.me & filters.command("exchange_rate", prefixes=prefix_userbot))
