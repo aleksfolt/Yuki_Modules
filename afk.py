@@ -5,6 +5,7 @@ import json
 import os
 
 AFK_FILE = "afk_status.json"
+CONFIG_FILE = "config.json"
 
 afk_status = {}
 
@@ -16,13 +17,10 @@ def save_afk_status():
     with open(AFK_FILE, "w") as file:
         json.dump(afk_status, file, ensure_ascii=False, indent=4)
 
-with open("Yuki.bot", "r") as file:
-    data = {}
-    for line in file:
-        key, value = line.strip().split('=')
-        data[key] = value
-    OWNER_ID = int(data['user_id'])
-    prefix_userbot = data['prefix']
+with open(CONFIG_FILE, "r") as file:
+    config_data = json.load(file)
+    OWNER_ID = int(config_data['user_id'])
+    prefix_userbot = config_data['prefix']
 
 cinfo = f"☀{prefix_userbot}afk"
 ccomand = f" включает и выключает режим AFK.\nПример: {prefix_userbot}afk <причина>\nПример: {prefix_userbot}afkoff"
@@ -66,3 +64,4 @@ def register_module(app: Client):
                      f"Включение AFK: `{prefix_userbot}afk Ухожу на обед`\n"
                      f"Выключение AFK: `{prefix_userbot}afkoff`\n\n(`@im_del_acc`)")
         await message.reply_text(help_text)
+
