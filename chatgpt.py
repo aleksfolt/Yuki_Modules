@@ -1,20 +1,20 @@
 from pyrogram import Client, filters
 import g4f
+import json
+import os
 
 g4f.debug.logging = False
 g4f.check_version = False
 
-with open("Yuki.bot", "r") as file:
-    data = {}
-    for line in file:
-        key, value = line.strip().split('=')
-        data[key] = value
-    prefix_userbot = data['prefix']
-    OWNER_ID = int(data['user_id'])
+CONFIG_FILE = "config.json"
+
+with open(CONFIG_FILE, "r") as file:
+    config_data = json.load(file)
+    prefix_userbot = config_data['prefix']
+    OWNER_ID = int(config_data['user_id'])
 
 cinfo = f"🤖`{prefix_userbot}gpt`"
 ccomand = " ChatGPT"
-
 
 def register_module(app: Client):
     @app.on_message(filters.me & filters.command("gpt", prefixes=prefix_userbot))
@@ -29,3 +29,4 @@ def register_module(app: Client):
             f"**🧠 Ответ:** `{response}`"
         )
         await message.reply_text(reply_text)
+
