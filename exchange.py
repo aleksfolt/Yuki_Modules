@@ -7,7 +7,6 @@ CONFIG_FILE = "config.json"
 with open(CONFIG_FILE, "r") as file:
     config_data = json.load(file)
     prefix_userbot = config_data['prefix']
-    OWNER_ID = int(config_data['user_id'])
 
 cinfo = f"💱`{prefix_userbot}exchange_rate`"
 ccomand = f" показывает курс обмена валют. Пример: `{prefix_userbot}exchange_rate USD RUB`"
