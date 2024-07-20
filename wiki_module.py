@@ -1,14 +1,14 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 import wikipediaapi
+import json
 
-with open("Yuki.bot", "r") as file:
-    data = {}
-    for line in file:
-        key, value = line.strip().split('=')
-        data[key] = value
-    OWNER_ID = int(data['user_id'])
-    prefix_userbot = data['prefix']
+CONFIG_FILE = "config.json"
+
+with open(CONFIG_FILE, "r") as file:
+    config_data = json.load(file)
+    OWNER_ID = int(config_data['user_id'])
+    prefix_userbot = config_data['prefix']
 
 cinfo = f"🔍{prefix_userbot}wiki"
 ccomand = f" ищет информацию по Википедии.\nПример: {prefix_userbot}wiki <запрос>"
@@ -52,3 +52,4 @@ def register_module(app: Client):
                      f"**Пример использования:**\n"
                      f"Поиск информации: `{prefix_userbot}wiki Python`")
         await message.reply_text(help_text)
+
