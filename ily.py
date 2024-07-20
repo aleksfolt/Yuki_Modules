@@ -1,14 +1,14 @@
 import random
 from pyrogram import Client, filters
 from asyncio import sleep
+import json
 
-with open("Yuki.bot", "r") as file:
-    data = {}
-    for line in file:
-        key, value = line.strip().split('=')
-        data[key] = value
-    prefix_userbot = data['prefix']
-    OWNER_ID = int(data['user_id'])
+CONFIG_FILE = "config.json"
+
+with open(CONFIG_FILE, "r") as file:
+    config_data = json.load(file)
+    prefix_userbot = config_data['prefix']
+    OWNER_ID = int(config_data['user_id'])
 
 cinfo = f"📝`{prefix_userbot}ily`"
 ccomand = " famous TikTok animation with hearts"
