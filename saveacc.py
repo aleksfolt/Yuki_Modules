@@ -2,20 +2,18 @@ from pyrogram import Client, filters
 import json
 import os
 from PIL import Image
-import requests
 
 SAVE_DIR = "saved_accounts"
 AVATAR_DIR = "avatars"
 os.makedirs(SAVE_DIR, exist_ok=True)
 os.makedirs(AVATAR_DIR, exist_ok=True)
 
-with open("Yuki.bot", "r") as file:
-    data = {}
-    for line in file:
-        key, value = line.strip().split('=')
-        data[key] = value
-    prefix_userbot = data['prefix']
-    OWNER_ID = int(data['user_id'])
+CONFIG_FILE = "config.json"
+
+with open(CONFIG_FILE, "r") as file:
+    config_data = json.load(file)
+    prefix_userbot = config_data['prefix']
+    OWNER_ID = int(config_data['user_id'])
 
 cinfo = f"☀{prefix_userbot}saveacc"
 ccomand = " Напишите -saveacc help для получения подробной информации."
@@ -96,3 +94,4 @@ def register_module(app: Client):
             await message.reply_text("**❌Сохраненный аккаунт не найден. Убедитесь, что имя указано правильно.**")
         except Exception as e:
             await message.reply_text(f"**❌Произошла ошибка: {e}**")
+
