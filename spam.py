@@ -1,13 +1,13 @@
 from pyrogram import Client, filters
 import asyncio
+import json
 
-with open("Yuki.bot", "r") as file:
-    data = {}
-    for line in file:
-        key, value = line.strip().split('=')
-        data[key] = value
-    prefix_userbot = data['prefix']
-    OWNER_ID = int(data['user_id'])
+CONFIG_FILE = "config.json"
+
+with open(CONFIG_FILE, "r") as file:
+    config_data = json.load(file)
+    prefix_userbot = config_data['prefix']
+    OWNER_ID = int(config_data['user_id'])
 
 cinfo = f"📝`{prefix_userbot}spam`"
 ccomand = f" отправляет сообщение указанное количество раз с заданным интервалом. Пример: `{prefix_userbot}spam 10 привет 0.1`"
